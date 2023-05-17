@@ -11,7 +11,6 @@ import java.io.Serializable;
 import static javax.persistence.GenerationType.*;
 
 @Entity
-//@Table(name = "TEACHER")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -20,8 +19,6 @@ public class Teacher implements Serializable {
     @GeneratedValue(strategy = AUTO)
 
     private Long id;
-
     private String firstName;
-
     private String lastName;
 }

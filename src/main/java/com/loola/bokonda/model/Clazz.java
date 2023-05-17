@@ -23,7 +23,7 @@ public class Clazz implements Serializable {
     @Column(unique = true)
     private String name;
 
-    @OneToOne
+    @OneToOne(fetch = FetchType.EAGER)
     private Teacher teacher;
 
 

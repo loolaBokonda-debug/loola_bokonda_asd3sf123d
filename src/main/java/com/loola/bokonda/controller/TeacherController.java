@@ -1,4 +1,4 @@
-package com.loola.bokonda.ressource;
+package com.loola.bokonda.controller;
 
 import com.loola.bokonda.model.Teacher;
 import com.loola.bokonda.service.implementation.TeacherServiceImp;
@@ -13,7 +13,7 @@ import java.util.List;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/teachers")
-public class TeacherRessource {
+public class TeacherController {
 
     private final TeacherServiceImp teacherServiceImp;
     @PostMapping

@@ -11,7 +11,6 @@ import java.io.Serializable;
 
 import static javax.persistence.GenerationType.AUTO;
 @Entity
-//@Table(name = "STUDENT")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor

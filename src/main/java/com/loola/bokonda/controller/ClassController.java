@@ -1,4 +1,4 @@
-package com.loola.bokonda.ressource;
+package com.loola.bokonda.controller;
 
 import com.loola.bokonda.dto.ClassCreateDto;
 import com.loola.bokonda.model.Clazz;
@@ -13,7 +13,7 @@ import java.util.List;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/class")
-public class ClassRessource {
+public class ClassController {
 
     private final ClassServiceImp classServiceImp;
 

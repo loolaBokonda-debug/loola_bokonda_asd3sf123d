@@ -1,6 +1,5 @@
 package com.loola.bokonda.service.implementation;
 
-import com.loola.bokonda.dao.StudentDao;
 import com.loola.bokonda.dto.StudentCreateDto;
 import com.loola.bokonda.model.Clazz;
 import com.loola.bokonda.model.Student;
@@ -11,6 +10,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -28,7 +28,6 @@ public class StudentServiceImp implements StudentService {
 
     private final ClassRepository classRepository;
 
-    private  final StudentDao studentDao;
 
 
     @Override
@@ -44,17 +43,27 @@ public class StudentServiceImp implements StudentService {
         return studentRepo.save(student);
     }
 
-
     @Override
-    public List<Student> list(String className, String teacherName, int pageSize, int offSet) {
+    public List<Student> list(String className, String teacherFirstName, String teacherlastName, int page, int size) {
+        Pageable paging = PageRequest.of(page, size);
+        Page<Student> pageStudents;
         log.info("Fetching all students !");
-            return studentDao.getAllStudent(className,teacherName, pageSize, offSet);
+            if(className == null && teacherFirstName == null && teacherlastName == null) {
+                pageStudents = studentRepo.findAll(paging);
+                return pageStudents.getContent();
+            }
+            if (className != null && teacherFirstName == null && teacherlastName == null) {
+                 pageStudents = studentRepo.findByClazz_name(className, paging);
+                  return pageStudents.getContent();
+            }
+            if (className == null && teacherFirstName != null && teacherlastName != null) {
+                pageStudents = studentRepo.findByClazz_teacher_firstNameAndClazz_teacher_lastName(teacherFirstName, teacherlastName, paging);
+                   return pageStudents.getContent();
+            }
 
-    }
+            pageStudents = studentRepo.findByClazz_nameAndClazz_teacher_firstNameAndClazz_teacher_lastName(className, teacherFirstName, teacherlastName, paging);
 
-    @Override
-    public Page<Student> studentPagination(int offset, int pageSize) {
-        return studentRepo.findAll(PageRequest.of(offset, pageSize));
+            return pageStudents.getContent();
     }
 
 
